@@ -1,7 +1,7 @@
 # Dataset Configuration
 dataset:
   category: 'cabinet'
-  data_path: '/home/ubuntu/data/projects/MMPC/data/ShapeNetViPC-Dataset'
+  data_path: './data/projects/MMPC/data/ShapeNetViPC-Dataset'
   sampling_method: 'poisson_disk'
   gen_points: 2048
   preload_pc: false
