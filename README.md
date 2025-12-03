@@ -24,10 +24,10 @@ This repository contains the official implementation for "Rethinking Multimodal 
 
 The main components of this repo include:
 
-- `generate_point_cloud.py`: generate high-quality prior point clouds from rendered views using Trellis;
-- `train.py` / `train.sh`: train MMPC models on ShapeNetViPC;
-- `inference.py`: perform category-level evaluation on the test set (Chamfer-L2 / F-Score / EMD);
-- `utils`, `metrics`, `models`, `extensions`: data loading, evaluation metrics, network architectures and CUDA extensions.
+- `generate_point_cloud.py` — Generate generative prior point cloud from rendered views using a pretrained image-to-3D model.
+- `train.py` / `train.sh` — Single-/multi-GPU training on ShapeNetViPC.
+- `inference.py` — Category-level evaluation on the test set (Chamfer-L2 / F-Score / EMD).
+- `utils/`, `metrics/`, `models/`, `extensions/` — Dataloaders, metrics, model components, and CUDA extensions.
 
 ## Environment
 
@@ -45,7 +45,6 @@ We provide a Conda environment file:
 conda env create -f environment.yml
 conda activate pgnet
 ```
-
 
 ### Build CUDA Extensions
 
@@ -164,7 +163,7 @@ Important training-related configs are all in the YAML file, e.g.:
 - `training.max_steps` / `training.eval_steps`: max training steps & eval interval;
 - `output.base_path`: root directory for all experiment outputs (default `output`).
 
-#### GPU memory and gradient accumulation
+#### GPU Memory tips
 
 - If you run into OOM (out of memory), increase `training.gradient_accumulation_steps` first.
 - Keep `training.global_batch_size` unchanged to preserve the same optimization dynamics; changing it alters the effective batch size and can lead to different training results.
@@ -207,6 +206,18 @@ python inference.py \
 
 The script will iterate over all samples listed in `test_list.txt`,
 compute per-sample metrics, and print the averaged results.
+
+## Results (ShapeNetViPC)
+
+- **Average CD**: **−23.5%** vs previous SOTA
+- **Average F-Score**: **+7.1%** improvement
+- Produces more **uniform** point distributions and **structurally consistent** completions across categories
+
+## Why Completion-by-Correction?
+
+- **Start complete, then correct**: Initialize from a **topologically complete** prior $P_g$ (image-to-3D) and align it with real observations.
+- **Grounding instead of hallucination**: Replace ill-posed inpainting with **feature-space grounding + guided refinement**.
+- **Hierarchical refinement**: GRBs associate observation/prior features and use **structure-aware upsampling** for local fidelity. 
 
 ## Citation
 
