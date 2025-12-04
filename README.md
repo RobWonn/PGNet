@@ -249,6 +249,7 @@ This project primarily uses code from the following repositories:
 - PoinTr (Diverse Point Cloud Completion with Geometry-Aware Transformers): https://github.com/yuxumin/PoinTr
 - Microsoft TRELLIS (microsoft/TRELLIS-image-large): https://github.com/microsoft/TRELLIS
 - FSC (FSC: Few-point Shape Completion): https://github.com/xianzuwu/FSC
+- SnowflakeNet (Snowflake Point Deconvolution for Point Cloud Completion and Generation with Skip-Transformer): https://github.com/AllenXiangX/SnowflakeNet
 
 We also acknowledge:
 
